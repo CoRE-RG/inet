@@ -10,7 +10,7 @@ import inet.node.inet.WirelessHost;
 import inet.node.wireless.AccessPoint;
 import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
 import inet.visualizer.contract.IIntegratedVisualizer;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network MultiRadio
@@ -53,6 +53,6 @@ network MultiRadio
                 @display("p=255,168");
         }
     connections:
-        accessPoint1.ethg++ <--> TransmissionChannel <--> accessPoint2.ethg++ if useEthernetSwitching;
+        accessPoint1.ethg++ <--> DatarateChannel <--> accessPoint2.ethg++ if useEthernetSwitching;
 }
 

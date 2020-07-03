@@ -23,7 +23,7 @@ import inet.common.misc.ThruputMeteringChannel;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network DiffservNetwork
@@ -45,7 +45,7 @@ network DiffservNetwork
             datarate = coreDatarate;
             thruputDisplayFormat = "b B U";
         }
-        channel ethernetline extends TransmissionChannel
+        channel ethernetline extends DatarateChannel
         {
             delay = 0.1us;
         }

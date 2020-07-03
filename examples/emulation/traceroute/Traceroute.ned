@@ -22,7 +22,7 @@ import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
 import ned.DatarateChannel;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 network Traceroute
 {
@@ -34,7 +34,7 @@ network Traceroute
             datarate = 1 Gbps;
         }
 
-        channel ethline extends TransmissionChannel {
+        channel ethline extends DatarateChannel {
             delay = 100ms;
         }
     submodules:

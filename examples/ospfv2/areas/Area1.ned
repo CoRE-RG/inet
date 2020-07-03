@@ -4,7 +4,7 @@ package inet.examples.ospfv2.areas;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.StandardHost;
 import inet.node.ospfv2.OspfRouter;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 module TwoNetsArea
@@ -15,7 +15,7 @@ module TwoNetsArea
     gates:
         inout ethg[];
     types:
-        channel C extends TransmissionChannel
+        channel C extends DatarateChannel
         {
             delay = 0.1us;
         }

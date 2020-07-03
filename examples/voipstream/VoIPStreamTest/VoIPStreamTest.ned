@@ -18,18 +18,18 @@ import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network VoIPStreamTest
 {
     types:
-        channel line1 extends TransmissionChannel {
+        channel line1 extends DatarateChannel {
             parameters:
                 delay = 100us;
         }
 
-        channel line2 extends TransmissionChannel {
+        channel line2 extends DatarateChannel {
             parameters:
                 delay = 100us;
         }

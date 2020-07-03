@@ -17,13 +17,13 @@
 
 package inet.node.ethernet;
 
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 //
 // Base for Ethernet link types. Propagation delay can be specified with the
 // length of the cable, i.e. in meters instead of nanoseconds or microseconds.
 //
-channel EtherLink extends TransmissionChannel
+channel EtherLink extends DatarateChannel
 {
     double length @unit(m) = default(10m);
     delay = replaceUnit(length / 2e8, "s");

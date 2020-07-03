@@ -3,7 +3,7 @@
 package inet.examples.ospfv2.areas;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network OSPF_AreaTest
@@ -41,6 +41,6 @@ network OSPF_AreaTest
                 @display("p=100,100;is=s");
         }
     connections:
-        Area1.ethg[0] <--> TransmissionChannel {  delay = 0.1us; } <--> Area2.ethg[0];
+        Area1.ethg[0] <--> DatarateChannel {  delay = 0.1us; } <--> Area2.ethg[0];
 }
 

@@ -21,16 +21,16 @@ package inet.examples.inet.redmarker;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
-channel NormalP extends TransmissionChannel
+channel NormalP extends DatarateChannel
 {
     double datarate @unit(bps) = default(10Mbps);
     delay = default(1ms);
 }
 
-channel FastP extends TransmissionChannel
+channel FastP extends DatarateChannel
 {
     double datarate @unit(bps) = 100Mbps;
     delay = 1ms;

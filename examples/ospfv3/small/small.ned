@@ -4,7 +4,7 @@ import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.StandardHost;
 import inet.node.ospfv3.Ospfv3Router;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network small
@@ -13,7 +13,7 @@ network small
         *.eth[*].bitrate = 100 Mbps;
         @display("bgb=844,488");
     types:
-        channel Channel extends TransmissionChannel
+        channel Channel extends DatarateChannel
         {
             delay = 0.1us;
         }

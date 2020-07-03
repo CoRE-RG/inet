@@ -4,7 +4,7 @@ package inet.examples.ospfv2.areatests;
 
 import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network OSPF_BackboneAndOneStubTest
@@ -12,7 +12,7 @@ network OSPF_BackboneAndOneStubTest
     parameters:
         *.eth[*].bitrate = 100 Mbps;
     types:
-        channel C extends TransmissionChannel
+        channel C extends DatarateChannel
         {
             delay = 0.1us;
         }

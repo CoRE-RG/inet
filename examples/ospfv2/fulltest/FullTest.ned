@@ -7,10 +7,10 @@ import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.StandardHost;
 import inet.node.ospfv2.OspfRouter;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
-channel C extends TransmissionChannel
+channel C extends DatarateChannel
 {
     delay = 0.1us;
     double datarate @unit(bps) = 100 Mbps;

@@ -26,7 +26,7 @@ import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
 import ned.DatarateChannel;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network FlatNet

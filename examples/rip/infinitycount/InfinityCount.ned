@@ -7,7 +7,7 @@ package inet.examples.rip.infinitycount;
 import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.Router;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network RIPInfinityCountTest
@@ -16,7 +16,7 @@ network RIPInfinityCountTest
         int numRipRouters;
         *.eth[*].bitrate = 10 Mbps;
     types:
-        channel C extends TransmissionChannel
+        channel C extends DatarateChannel
         {
             delay = 0.1us;
         }

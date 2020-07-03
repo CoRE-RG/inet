@@ -2,7 +2,7 @@ package inet.tests.ethernet;
 
 import inet.node.ethernet.EtherHost2;
 import inet.node.ethernet.EtherSwitch;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network HostsWithSwitch
@@ -27,8 +27,8 @@ network HostsWithSwitch
                 @display("p=260,79");
         }
     connections:
-        hostA.ethg <--> TransmissionChannel <--> switch.ethg++;
-        hostB.ethg <--> TransmissionChannel <--> switch.ethg++;
-        hostC.ethg <--> TransmissionChannel <--> switch.ethg++;
+        hostA.ethg <--> DatarateChannel <--> switch.ethg++;
+        hostB.ethg <--> DatarateChannel <--> switch.ethg++;
+        hostC.ethg <--> DatarateChannel <--> switch.ethg++;
 }
 

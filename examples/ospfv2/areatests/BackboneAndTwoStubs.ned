@@ -5,7 +5,7 @@ package inet.examples.ospfv2.areatests;
 import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ospfv2.OspfRouter;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network OSPF_BackboneAndTwoStubsTest
@@ -14,7 +14,7 @@ network OSPF_BackboneAndTwoStubsTest
         int numBBRouters = default(3);
         *.eth[*].bitrate = 100 Mbps;
     types:
-        channel C extends TransmissionChannel
+        channel C extends DatarateChannel
         {
             delay = 0.1us;
         }

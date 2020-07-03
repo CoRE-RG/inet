@@ -7,7 +7,7 @@ import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.StandardHost;
 import inet.node.ospfv2.OspfRouter;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network DynamicTest
@@ -16,7 +16,7 @@ network DynamicTest
         @display("p=10,10;b=712,152");
         *.eth[*].bitrate = 100 Mbps;
     types:
-        channel C extends TransmissionChannel
+        channel C extends DatarateChannel
         {
             delay = 0.1us;
         }

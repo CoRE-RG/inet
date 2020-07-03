@@ -23,7 +23,7 @@ import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.StandardHost;
 import inet.visualizer.integrated.IntegratedVisualizer;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network ClientServerWithSM
@@ -31,7 +31,7 @@ network ClientServerWithSM
     parameters:
         *.eth[*].bitrate = 10 Mbps;
     types:
-        channel C extends TransmissionChannel
+        channel C extends DatarateChannel
         {
             delay = 0.1us;
         }

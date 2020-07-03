@@ -35,7 +35,7 @@ import inet.applications.httptools.configurator.HttpController;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 //
 // 10-nodes test scenario for sockets.
@@ -49,7 +49,7 @@ network Http10Servers
         int numclients @prompt("Number of clients") = default(10);
         *.eth[*].bitrate = 100 Mbps;
     types:
-        channel ethernetline extends TransmissionChannel {
+        channel ethernetline extends DatarateChannel {
             delay = 0.1us;
         }
 

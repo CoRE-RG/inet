@@ -7,14 +7,14 @@ package inet.examples.httptools.socket.pairsocket;
 import inet.applications.httptools.configurator.HttpController;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.StandardHost;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 network HttpSockPair
 {
     parameters:
         *.eth[*].bitrate = 1000 Mbps;
     types:
-        channel gigabitline extends TransmissionChannel {
+        channel gigabitline extends DatarateChannel {
             delay = 0.1us;
         }
     submodules:

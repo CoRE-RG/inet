@@ -19,7 +19,7 @@ import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
 import ned.DatarateChannel;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network ARPTest
@@ -31,7 +31,7 @@ network ARPTest
             delay = 1us;
             datarate = 512Mbps;
         }
-        channel ethline extends TransmissionChannel {
+        channel ethline extends DatarateChannel {
             delay = 50ns;
         }
     submodules:

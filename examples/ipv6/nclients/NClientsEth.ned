@@ -22,7 +22,7 @@ package inet.examples.ipv6.nclients;
 import inet.networklayer.configurator.ipv6.Ipv6FlatNetworkConfigurator;
 import inet.node.ipv6.Router6;
 import inet.node.ipv6.StandardHost6;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network NClientsEth
@@ -31,7 +31,7 @@ network NClientsEth
         int n;
         *.eth[*].bitrate = 10 Mbps;
     types:
-        channel ethernetline extends TransmissionChannel
+        channel ethernetline extends DatarateChannel
         {
             delay = 0.1us;
         }

@@ -5,7 +5,7 @@ import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
 import ned.DatarateChannel;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network UDPBroadcastNetwork
@@ -19,7 +19,7 @@ network UDPBroadcastNetwork
             datarate = 10Mbps;
             delay = 0.1us;
         }
-        channel E extends TransmissionChannel {
+        channel E extends DatarateChannel {
             delay = 0.1us;
         }
     submodules:

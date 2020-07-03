@@ -4,7 +4,7 @@ import inet.common.misc.ThruputMeteringChannel;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.StandardHost;
 import inet.visualizer.integrated.IntegratedCanvasVisualizer;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network BgpNetwork
@@ -19,7 +19,7 @@ network BgpNetwork
             displayAsTooltip = true;
             thruputDisplayFormat = "#N";
         }
-        channel ethlink extends TransmissionChannel
+        channel ethlink extends DatarateChannel
         {
             delay = 50us;
         }

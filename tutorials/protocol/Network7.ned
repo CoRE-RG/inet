@@ -29,7 +29,7 @@ import inet.queueing.queue.PacketQueue;
 import inet.queueing.server.InstantServer;
 import inet.queueing.sink.PassivePacketSink;
 import inet.queueing.source.ActivePacketSource;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 module ClientHost7
 {
@@ -109,5 +109,5 @@ network Network7
             @display("p=200,100");
         }
     connections allowunconnected:
-        client.out --> TransmissionChannel {  delay = 1us; ber = 1E-5; } --> server.in;
+        client.out --> DatarateChannel {  delay = 1us; ber = 1E-5; } --> server.in;
 }

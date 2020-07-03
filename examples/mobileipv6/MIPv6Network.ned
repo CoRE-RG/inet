@@ -31,10 +31,10 @@ import inet.node.xmipv6.CorrespondentNode6;
 import inet.node.xmipv6.HomeAgent6;
 import inet.node.xmipv6.WirelessHost6;
 import inet.physicallayer.ieee80211.packetlevel.Ieee80211ScalarRadioMedium;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
-channel ethernetline extends TransmissionChannel
+channel ethernetline extends DatarateChannel
 {
     delay = 0.1us;
 }

@@ -2,7 +2,7 @@ package inet.examples.ospfv3.v3_4_routers_2_areas;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ospfv3.Ospfv3Router;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network v3_4_routers_2_areas
@@ -10,7 +10,7 @@ network v3_4_routers_2_areas
     parameters:
         *.eth[*].bitrate = 100 Mbps;
     types:
-        channel Channel extends TransmissionChannel
+        channel Channel extends DatarateChannel
         {
             delay = 0.1us;
         }

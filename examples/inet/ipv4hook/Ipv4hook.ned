@@ -8,7 +8,7 @@ import inet.networklayer.common.NetfilterInfoHook;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 module MyHost extends StandardHost
@@ -38,7 +38,7 @@ network Ipv4hook
     parameters:
         *.eth[*].bitrate = 10 Mbps;
     types:
-        channel C extends TransmissionChannel
+        channel C extends DatarateChannel
         {
             delay = 0.1us;
         }

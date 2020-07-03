@@ -7,7 +7,7 @@ import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.StandardHost;
 import inet.node.ospfv2.OspfRouter;
 import inet.visualizer.integrated.IntegratedCanvasVisualizer;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network BgpNetwork
@@ -23,7 +23,7 @@ network BgpNetwork
                 displayAsTooltip = true;
                 thruputDisplayFormat = "#N";
         }
-        channel ethlink extends TransmissionChannel
+        channel ethlink extends DatarateChannel
         {
             parameters:
                 delay = 50us;

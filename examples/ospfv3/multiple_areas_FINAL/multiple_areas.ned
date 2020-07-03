@@ -5,7 +5,7 @@ import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.StandardHost;
 import inet.node.ospfv3.Ospfv3Router;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network multiple_areas2
@@ -14,7 +14,7 @@ network multiple_areas2
         *.eth[*].bitrate = 100 Mbps;
         @display("bgb=819.0325,484.4675");
     types:
-        channel Channel extends TransmissionChannel
+        channel Channel extends DatarateChannel
         {
             delay = 0.1us;
         }

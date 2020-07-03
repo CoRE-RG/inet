@@ -24,7 +24,7 @@ import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.Router;
 import inet.node.inet.StandardHost;
 import ned.DatarateChannel;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 //
@@ -45,7 +45,7 @@ network DiffservNetwork
             delay = normal(0.004s, 0.0018s);
             datarate = 128kbps;
         }
-        channel ethernetline extends TransmissionChannel
+        channel ethernetline extends DatarateChannel
         {
             delay = 0.1us;
         }

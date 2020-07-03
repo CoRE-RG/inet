@@ -22,7 +22,7 @@ import inet.common.misc.NetAnimTrace;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.inet.StandardHost;
 import ned.DatarateChannel;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network PcapRecorderTest
@@ -35,7 +35,7 @@ network PcapRecorderTest
             datarate = 10Mbps;
             delay = 0.1us;
         }
-        channel E extends TransmissionChannel
+        channel E extends DatarateChannel
         {
             delay = 0.1us;
         }

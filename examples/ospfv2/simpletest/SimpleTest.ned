@@ -6,7 +6,7 @@ import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.node.ethernet.EtherSwitch;
 import inet.node.inet.StandardHost;
 import inet.node.ospfv2.OspfRouter;
-import ned.TransmissionChannel;
+import ned.DatarateChannel;
 
 
 network SimpleTest
@@ -15,7 +15,7 @@ network SimpleTest
         *.eth[*].bitrate = 100 Mbps;
         @display("p=10,10;b=712,152");
     types:
-        channel C extends TransmissionChannel
+        channel C extends DatarateChannel
         {
             delay = 0.1us;
         }
