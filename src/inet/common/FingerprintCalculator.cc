@@ -25,7 +25,6 @@ void FingerprintCalculator::parseIngredients(const char *s)
 {
     cSingleFingerprintCalculator::parseIngredients(s);
     filterEvents = strchr(s, NETWORK_COMMUNICATION_FILTER) != nullptr;
-    filterProgress = strchr(s, PROGRESS_CONVERTER_FILTER) != nullptr;
 }
 
 cSingleFingerprintCalculator::FingerprintIngredient FingerprintCalculator::validateIngredient(char ch)
@@ -43,8 +42,6 @@ bool FingerprintCalculator::addEventIngredient(cEvent *event, cSingleFingerprint
     else {
         switch ((FingerprintIngredient)ingredient) {
             case NETWORK_COMMUNICATION_FILTER:
-            case PROGRESS_CONVERTER_FILTER:
-                break;
             case NETWORK_NODE_PATH:
                 if (auto msg = dynamic_cast<cMessage *>(event)) {
                     if (auto senderNode = findContainingNode(msg->getSenderModule()))
@@ -90,12 +87,6 @@ bool FingerprintCalculator::addEventIngredient(cEvent *event, cSingleFingerprint
 
 void FingerprintCalculator::addEvent(cEvent *event)
 {
-    if (auto progress = dynamic_cast<cProgress*>(event)) {
-        auto packet = progress->getPacket();
-        packet->setArrival(progress->getArrivalModuleId(), progress->getArrivalGateId(), progress->getArrivalTime());
-        packet->setSentFrom(progress->getSenderModule(), progress->getSenderGateId(), progress->getSendingTime());
-        event = packet;
-    }
     if (!filterEvents)
         cSingleFingerprintCalculator::addEvent(event);
     else {
