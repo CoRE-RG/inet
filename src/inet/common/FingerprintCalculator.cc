@@ -90,24 +90,18 @@ bool FingerprintCalculator::addEventIngredient(cEvent *event, cSingleFingerprint
 
 void FingerprintCalculator::addEvent(cEvent *event)
 {
-    if (filterProgress) {
-        if (auto progress = dynamic_cast<cProgress*>(event)) {
-            if (progress->getKind() != cProgress::PACKET_END)
-                return;
-            auto packet = progress->getPacket();
-            packet->setArrival(progress->getArrivalModuleId(), progress->getArrivalGateId(), progress->getArrivalTime());
-            packet->setSentFrom(progress->getSenderModule(), progress->getSenderGateId(), progress->getSendingTime());
-            event = packet;
-        }
+    if (auto progress = dynamic_cast<cProgress*>(event)) {
+        auto packet = progress->getPacket();
+        packet->setArrival(progress->getArrivalModuleId(), progress->getArrivalGateId(), progress->getArrivalTime());
+        packet->setSentFrom(progress->getSenderModule(), progress->getSenderGateId(), progress->getSendingTime());
+        event = packet;
     }
-
-    if (!filterEvents) {
+    if (!filterEvents)
         cSingleFingerprintCalculator::addEvent(event);
-    }
     else {
         if (event->isMessage()) {
             auto msg = static_cast<cMessage *>(event);
-            if (! msg->isSelfMessage()) {
+            if (!msg->isSelfMessage()) {
                 auto senderNode = findContainingNode(msg->getSenderModule());
                 auto arrivalNode = findContainingNode(msg->getArrivalModule());
                 if (senderNode != arrivalNode)
