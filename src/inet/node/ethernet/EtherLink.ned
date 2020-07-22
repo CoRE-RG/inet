@@ -31,7 +31,7 @@ channel EtherLink extends DatarateChannel
 
 channel EtherLinkWithDatarate extends EtherLink
 {
-    double datarate @unit(bps);
+    datarate @unit(bps);
 }
 
 //
