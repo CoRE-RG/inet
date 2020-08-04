@@ -16,7 +16,6 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 
-
 package inet.examples.ethernet.lans;
 
 import inet.linklayer.ethernet.EtherBus;
@@ -25,14 +24,13 @@ import inet.node.ethernet.EtherHost;
 import inet.node.ethernet.EtherSwitch;
 import ned.DatarateChannel;
 
-
 //
 // A 100Mb/s Ethernet cable. Part of ~LargeNet.
 //
 channel cable extends DatarateChannel
 {
     delay = 0.1us;
-    double datarate @unit(bps) = 100Mbps;
+    datarate @unit(bps) = 100Mbps;
 }
 
 //
@@ -135,7 +133,7 @@ module LargeLAN
     types:
         channel cabletobus extends DatarateChannel
         {
-            double datarate @unit(bps) = 10Mbps;
+            datarate @unit(bps) = 10Mbps;
             delay = 0s;
         }
     submodules:
@@ -219,7 +217,7 @@ network LargeNet
         channel cabletoserver extends DatarateChannel
         {
             delay = 0s;
-            double datarate @unit(bps) = 1Gbps;
+            datarate @unit(bps) = 1Gbps;
         }
     submodules:
         switchBB[n]: EtherSwitch {

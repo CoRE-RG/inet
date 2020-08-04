@@ -27,13 +27,13 @@ network VoIPStreamTrafficTest
         channel line1 extends DatarateChannel {
             parameters:
                 delay = 100us;
-                double datarate @unit(bps) = 100 Mbps;
+                datarate @unit(bps) = 100 Mbps;
         }
 
         channel line2 extends DatarateChannel {
             parameters:
                 delay = 10us;
-                double datarate @unit(bps) = 100 Mbps;
+                datarate @unit(bps) = 100 Mbps;
         }
     submodules:
         client: StandardHost {

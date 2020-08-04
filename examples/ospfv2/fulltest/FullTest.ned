@@ -9,11 +9,10 @@ import inet.node.inet.StandardHost;
 import inet.node.ospfv2.OspfRouter;
 import ned.DatarateChannel;
 
-
 channel C extends DatarateChannel
 {
     delay = 0.1us;
-    double datarate @unit(bps) = 100 Mbps;
+    datarate @unit(bps) = 100 Mbps;
 }
 
 module OspfLan

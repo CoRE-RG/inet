@@ -20,7 +20,7 @@ network DcTcpIncast
             parameters:
                 per = 0;
                 ber = 0;
-                double datarate @unit(bps);
+                datarate @unit(bps);
         }
 
     submodules:
