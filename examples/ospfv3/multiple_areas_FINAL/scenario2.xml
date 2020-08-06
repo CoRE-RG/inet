@@ -6,7 +6,7 @@
   	<at t="300">
         <connect src-module="Router3" src-gate="ethg[1]"
                  dest-module="Router8" dest-gate="ethg[0]"
-                 channel-type="ned.TransmissionChannel">
+                 channel-type="ned.DatarateChannel">
             <param name="delay" value="0.1us" />
         </connect>
     </at>
