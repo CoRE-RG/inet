@@ -83,5 +83,5 @@ class INET_API EtherBus : public cSimpleModule, cListener
 
 } // namespace inet
 
-#endif // ifndef __INET_ETHERBUS_H
+#endif
 

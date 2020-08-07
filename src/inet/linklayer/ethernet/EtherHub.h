@@ -70,5 +70,5 @@ class INET_API EtherHub : public cSimpleModule, protected cListener
 
 } // namespace inet
 
-#endif // ifndef __INET_ETHERHUB_H
+#endif
 

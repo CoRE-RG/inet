@@ -724,5 +724,5 @@ class INET_API TcpConnection : public cSimpleModule
 
 } // namespace inet
 
-#endif // ifndef __INET_TCPCONNECTION_H
+#endif
 
