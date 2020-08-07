@@ -150,7 +150,7 @@ TcpStateVariables::TcpStateVariables()
     ecnWillingness = false;
     sndAck = false;
     rexmit = false;
-    eceReactionTime = 0;          
+    eceReactionTime = 0;
 }
 
 std::string TcpStateVariables::str() const
