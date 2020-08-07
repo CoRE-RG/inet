@@ -41,31 +41,12 @@ namespace inet {
 using namespace omnetpp;
 }
 
-#if OMNETPP_VERSION < 0x0504 || OMNETPP_BUILDNUM < 1020
-#  error At least OMNeT++/OMNEST version 5.4.1 required
+#if OMNETPP_VERSION < 0x0600 || OMNETPP_BUILDNUM < 1504
+#  error At least OMNeT++/OMNEST version 6.0 required
 #endif // if OMNETPP_VERSION < 0x0504
 
 #define INET_VERSION  0x0402
 #define INET_PATCH_LEVEL 0x00
-
-#if OMNETPP_VERSION < 0x0600
-#define OMNETPP5_CODE(x) x
-typedef long intval_t;
-typedef unsigned long uintval_t;
-#define scheduleAfter(x, y) scheduleAt(simTime() + (x), (y))
-#define rescheduleAt(x, y) cancelEvent((y)); scheduleAt((x), (y))
-#define rescheduleAfter(x, y) cancelEvent((y)); scheduleAt(simTime() + (x), (y))
-#define setDeliverImmediately setDeliverOnReceptionStart
-#else
-#define OMNETPP5_CODE(x)
-#endif // if OMNETPP_VERSION < 0x0600
-
-#if OMNETPP_VERSION >= 0x0600
-#define OMNETPP6_CODE(x) x
-#else
-#define OMNETPP6_CODE(x)
-#endif // if OMNETPP_VERSION >= 0x0600
-
 
 #if defined(INET_EXPORT)
 #  define INET_API    OPP_DLLEXPORT
