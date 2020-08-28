@@ -18,10 +18,11 @@
 #ifndef __INET_ETHERHUB_H
 #define __INET_ETHERHUB_H
 
-#include "inet/common/INETDefs.h"
-#include "inet/linklayer/ethernet/EtherPhyFrame_m.h"
+#include "inet/physicallayer/ethernet/EthernetSignal_m.h"
 
 namespace inet {
+
+using namespace inet::physicallayer;
 
 /**
  * Models a wiring hub. It simply broadcasts the received message

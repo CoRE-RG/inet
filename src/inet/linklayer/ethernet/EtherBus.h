@@ -18,12 +18,11 @@
 #ifndef __INET_ETHERBUS_H
 #define __INET_ETHERBUS_H
 
-#include <vector>
-
-#include "inet/common/INETDefs.h"
-#include "inet/linklayer/ethernet/EtherPhyFrame_m.h"
+#include "inet/physicallayer/ethernet/EthernetSignal_m.h"
 
 namespace inet {
+
+using namespace inet::physicallayer;
 
 /**
  * Implements the shared coaxial cable in classic Ethernet. See the NED file
