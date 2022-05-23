@@ -252,7 +252,14 @@ void ScenarioManager::processSetParamCommand(const cXMLElement *node)
 
     // set the parameter to the given value
     cPar& param = mod->par(parAttr);
-    param.parse(valueAttr);
+    if (!strcmp(param.getTypeName(param.getType()), "string"))
+    {
+        param.setStringValue(valueAttr);
+    }
+    else
+    {
+        param.parse(valueAttr);
+    }
 }
 
 void ScenarioManager::setChannelParam(cGate *srcGate, const char *name, const char *value)
