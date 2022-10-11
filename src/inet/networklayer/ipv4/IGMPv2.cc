@@ -813,6 +813,24 @@ void IGMPv2::processV2Report(InterfaceEntry *ie, IGMPv2Report *msg)
         else if (routerGroupData->state == IGMP_RGS_CHECKING_MEMBERSHIP)
             cancelEvent(routerGroupData->rexmtTimer);
 
+        for(int k = 0; /** stop when route == nullptr or matches our group**/; k++) {
+            IPv4MulticastRoute * route = rt->getMulticastRoute(k);
+            if(!route) {
+                // create a new route
+                route = new IPv4MulticastRoute();
+                route->setMulticastGroup(groupAddr);
+                route->addOutInterface(new IMulticastRoute::OutInterface(ie));
+                rt->addMulticastRoute(route);
+                break;
+            }
+            // check if rout is the one we want to update
+            else if(route->isValid() && route->matches(IPv4Address(), groupAddr)) {
+                // update route with new receivers
+                route->addOutInterface(new IMulticastRoute::OutInterface(ie));
+                break;
+            }
+        }
+
         startTimer(routerGroupData->timer, groupMembershipInterval);
         routerGroupData->state = IGMP_RGS_MEMBERS_PRESENT;
     }
