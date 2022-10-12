@@ -314,6 +314,20 @@ void IGMPv2::deleteHostGroupData(InterfaceEntry *ie, const IPv4Address& group)
 
 void IGMPv2::deleteRouterGroupData(InterfaceEntry *ie, const IPv4Address& group)
 {
+    //remove routes in routing table for ie and group
+    for(int i = 0; i < rt->getNumMulticastRoutes(); i++) {
+        IPv4MulticastRoute * route = rt->getMulticastRoute(i);
+        if(route != nullptr
+                && route->isValid()
+                && route->matches(IPv4Address(), group)) {
+            route->removeOutInterface(ie);
+            if(route->getNumOutInterfaces() == 0) {
+                rt->removeMulticastRoute(route);
+            }
+            break;
+        }
+    }
+
     RouterInterfaceData *interfaceData = getRouterInterfaceData(ie);
     auto it = interfaceData->groups.find(group);
     if (it != interfaceData->groups.end()) {
