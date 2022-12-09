@@ -11,6 +11,7 @@
 #include "inet/common/PacketEventTag.h"
 #include "inet/common/ProtocolTag_m.h"
 #include "inet/common/TimeTag.h"
+#include "inet/queueing/common/LabelsTag_m.h"
 
 namespace inet {
 
@@ -82,10 +83,15 @@ void PacketTransmitterBase::prepareSignal(Signal *signal)
 {
     auto packet = check_and_cast<Packet *>(signal->getEncapsulatedPacket());
     auto oldPacketProtocolTag = packet->removeTagIfPresent<PacketProtocolTag>();
+    auto oldLabelsTag = packet->removeTagIfPresent<LabelsTag>();
     packet->clearTags();
     if (oldPacketProtocolTag != nullptr) {
         auto newPacketProtocolTag = packet->addTag<PacketProtocolTag>();
         *newPacketProtocolTag = *oldPacketProtocolTag;
+    }
+    if (oldLabelsTag != nullptr) {
+        auto newLabelsTag = packet->addTag<LabelsTag>();
+        *newLabelsTag = *oldLabelsTag;
     }
 }
 

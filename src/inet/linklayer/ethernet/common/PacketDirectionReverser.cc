@@ -19,6 +19,7 @@
 #include "inet/linklayer/common/VlanTag_m.h"
 #include "inet/protocolelement/redundancy/StreamTag_m.h"
 #include "inet/protocolelement/shaper/EligibilityTimeTag_m.h"
+#include "inet/queueing/common/LabelsTag_m.h"
 
 namespace inet {
 
@@ -44,6 +45,7 @@ void PacketDirectionReverser::processPacket(Packet *packet)
     auto streamInd = packet->findTag<StreamInd>();
     auto sequenceNumberInd = packet->findTag<SequenceNumberInd>();
     auto interfaceInd = packet->findTag<InterfaceInd>();
+    auto oldLabelsTag = packet->findTag<LabelsTag>();
     packet->trim();
     packet->clearTags();
     if (packetProtocolTag != nullptr)
@@ -74,6 +76,10 @@ void PacketDirectionReverser::processPacket(Packet *packet)
         packet->addTag<StreamReq>()->setStreamName(streamInd->getStreamName());
     if (sequenceNumberInd != nullptr)
         packet->addTag<SequenceNumberReq>()->setSequenceNumber(sequenceNumberInd->getSequenceNumber());
+    if (oldLabelsTag != nullptr) {
+        auto newLabelsTag = packet->addTag<LabelsTag>();
+        *newLabelsTag = *oldLabelsTag;
+    }
 }
 
 } // namespace inet
