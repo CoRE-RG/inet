@@ -20,6 +20,7 @@
 #include "inet/protocolelement/cutthrough/CutthroughTag_m.h"
 #include "inet/protocolelement/redundancy/StreamTag_m.h"
 #include "inet/protocolelement/shaper/EligibilityTimeTag_m.h"
+#include "inet/queueing/common/LabelsTag_m.h"
 
 namespace inet {
 
@@ -56,6 +57,7 @@ void PacketDirectionReverser::processPacket(Packet *packet)
     auto sequenceNumberInd = packet->findTag<SequenceNumberInd>();
     auto interfaceInd = packet->findTag<InterfaceInd>();
     auto encapsulationProtocolInd = packet->findTag<EncapsulationProtocolInd>();
+    auto oldLabelsTag = packet->findTag<LabelsTag>();
     packet->trim();
     packet->clearTags();
     if (packetProtocolTag != nullptr)
@@ -102,7 +104,10 @@ void PacketDirectionReverser::processPacket(Packet *packet)
         for (int i = 0; i < protocols.size(); i++)
             encapsulationProtocolReq->setProtocol(protocols.size() - i - 1, protocols[i]);
     }
+    if (oldLabelsTag != nullptr) {
+        auto newLabelsTag = packet->addTag<LabelsTag>();
+        *newLabelsTag = *oldLabelsTag;
+    }
 }
 
 } // namespace inet
-

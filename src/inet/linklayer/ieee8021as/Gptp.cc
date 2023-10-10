@@ -17,6 +17,7 @@
 #include "inet/linklayer/common/MacAddressTag_m.h"
 #include "inet/linklayer/ethernet/common/Ethernet.h"
 #include "inet/linklayer/ethernet/common/EthernetMacHeader_m.h"
+#include "inet/linklayer/ieee8021q/Ieee8021qTagHeader_m.h"
 #include "inet/networklayer/common/NetworkInterface.h"
 #include "inet/physicallayer/wired/ethernet/EthernetPhyHeader_m.h"
 
@@ -503,6 +504,14 @@ void Gptp::receiveSignal(cComponent *source, simsignal_t signal, cObject *obj, c
                     if (gptp->getDomainNumber() == domainNumber)
                         packet->addTagIfAbsent<GptpIngressTimeInd>()->setArrivalClockTime(clock->getClockTime());
                 }
+                else if (ethMacHeader->getTypeOrLength() == ETHERTYPE_8021Q_TAG) {
+                    const auto& ethQTag = packet->peekAt<Ieee8021qTagEpdHeader>(ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength());
+                    if (ethQTag->getTypeOrLength() == ETHERTYPE_GPTP) {
+                        const auto& gptp = packet->peekAt<GptpBase>(ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength() + ethQTag->getChunkLength());
+                        if (gptp->getDomainNumber() == domainNumber)
+                            packet->addTagIfAbsent<GptpIngressTimeInd>()->setArrivalClockTime(clock->getClockTime());
+                    }
+                }
             }
         }
     }
@@ -538,10 +547,36 @@ void Gptp::receiveSignal(cComponent *source, simsignal_t signal, cObject *obj, c
                         }
                     }
                 }
+                else if (ethMacHeader->getTypeOrLength() == ETHERTYPE_8021Q_TAG) {
+                    const auto& ethQTag = packet->peekAt<Ieee8021qTagEpdHeader>(ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength());
+                    if (ethQTag->getTypeOrLength() == ETHERTYPE_GPTP) {
+                        const auto& gptp = packet->peekAt<GptpBase>(ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength() + ethQTag->getChunkLength());
+                        if (gptp->getDomainNumber() == domainNumber) {
+                            int portId = getContainingNicModule(check_and_cast<cModule*>(source))->getInterfaceId();
+                            switch (gptp->getMessageType()) {
+                                case GPTPTYPE_PDELAY_RESP: {
+                                    auto gptpResp = dynamicPtrCast<const GptpPdelayResp>(gptp);
+                                    sendPdelayRespFollowUp(portId, gptpResp.get());
+                                    break;
+                                }
+                                case GPTPTYPE_SYNC: {
+                                    auto gptpSync = dynamicPtrCast<const GptpSync>(gptp);
+                                    sendFollowUp(portId, gptpSync.get(), clock->getClockTime());
+                                    break;
+                                }
+                                case GPTPTYPE_PDELAY_REQ:
+                                    if (portId == slavePortId)
+                                        pdelayReqEventEgressTimestamp = clock->getClockTime();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 }
-
