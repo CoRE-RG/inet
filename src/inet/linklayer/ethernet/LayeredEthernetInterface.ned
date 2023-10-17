@@ -72,4 +72,3 @@ module LayeredEthernetInterface extends NetworkInterface like IEthernetInterface
         trafficConditionerLayer.upperLayerOut --> processingDelayLayer.lowerLayerIn;
         processingDelayLayer.upperLayerOut --> { @display("m=n"); } --> upperLayerOut;
 }
-

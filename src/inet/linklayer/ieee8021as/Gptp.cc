@@ -17,6 +17,7 @@
 #include "inet/linklayer/common/MacAddressTag_m.h"
 #include "inet/linklayer/ethernet/common/Ethernet.h"
 #include "inet/linklayer/ethernet/common/EthernetMacHeader_m.h"
+#include "inet/linklayer/ieee8021q/Ieee8021qTagHeader_m.h"
 #include "inet/networklayer/common/NetworkInterface.h"
 #include "inet/physicallayer/wired/ethernet/EthernetPhyHeader_m.h"
 
@@ -492,12 +493,20 @@ const GptpBase *Gptp::extractGptpHeader(Packet *packet)
     if (*protocol != Protocol::ethernetPhy)
         return nullptr;
 
+    b offset = b(0);
     const auto& ethPhyHeader = packet->peekAtFront<physicallayer::EthernetPhyHeader>();
     const auto& ethMacHeader = packet->peekDataAt<EthernetMacHeader>(ethPhyHeader->getChunkLength());
-    if (ethMacHeader->getTypeOrLength() != ETHERTYPE_GPTP)
+    if (ethMacHeader->getTypeOrLength() == ETHERTYPE_GPTP)
+        offset = ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength();
+    else if (ethMacHeader->getTypeOrLength() == ETHERTYPE_8021Q_TAG) {
+        const auto& ethQTag = packet->peekAt<Ieee8021qTagEpdHeader>(ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength());
+        if (ethQTag->getTypeOrLength() == ETHERTYPE_GPTP) {
+            offset = ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength() + ethQTag->getChunkLength();
+        }
+    }
+    else
         return nullptr;
 
-    b offset = ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength();
     return packet->peekDataAt<GptpBase>(offset).get();
 }
 
@@ -550,4 +559,3 @@ void Gptp::handleDelayOrSendFollowUp(const GptpBase *gptp, cComponent *source)
     }
 }
 }
-
