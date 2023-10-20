@@ -500,9 +500,10 @@ const GptpBase *Gptp::extractGptpHeader(Packet *packet)
         offset = ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength();
     else if (ethMacHeader->getTypeOrLength() == ETHERTYPE_8021Q_TAG) {
         const auto& ethQTag = packet->peekAt<Ieee8021qTagEpdHeader>(ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength());
-        if (ethQTag->getTypeOrLength() == ETHERTYPE_GPTP) {
+        if (ethQTag->getTypeOrLength() == ETHERTYPE_GPTP)
             offset = ethPhyHeader->getChunkLength() + ethMacHeader->getChunkLength() + ethQTag->getChunkLength();
-        }
+        else
+            return nullptr;
     }
     else
         return nullptr;
