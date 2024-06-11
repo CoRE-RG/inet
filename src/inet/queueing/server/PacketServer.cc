@@ -64,8 +64,8 @@ void PacketServer::scheduleProcessingTimer()
 
 bool PacketServer::canStartProcessingPacket()
 {
-    return provider.canPullSomePacket() &&
-           consumer.canPushSomePacket();
+    auto packet = provider.canPullPacket();
+    return packet != nullptr && consumer.canPushPacket(packet);
 }
 
 void PacketServer::startProcessingPacket()
@@ -81,13 +81,23 @@ void PacketServer::endProcessingPacket()
     EV_INFO << "Processing packet ended" << EV_FIELD(packet) << EV_ENDL;
     simtime_t packetProcessingTime = simTime() - processingTimer->getSendingTime();
     simtime_t bitProcessingTime = packetProcessingTime / packet->getBitLength();
-    insertPacketEvent(this, packet, PEK_PROCESSED, bitProcessingTime);
+    insertPacketEvent(this, packet, PEK_PROCESSED, bitProcessingTime, 0);
     increaseTimeTag<ProcessingTimeTag>(packet, bitProcessingTime, packetProcessingTime);
     processedTotalLength += packet->getDataLength();
     emit(packetPushedSignal, packet);
     pushOrSendPacket(packet, outputGate, consumer);
     numProcessedPackets++;
     packet = nullptr;
+}
+
+cGate *PacketServer::getRegistrationForwardingGate(cGate *gate)
+{
+    if (gate == outputGate)
+        return inputGate;
+    else if (gate == inputGate)
+        return outputGate;
+    else
+        throw cRuntimeError("Unknown gate");
 }
 
 void PacketServer::handleCanPushPacketChanged(const cGate *gate)

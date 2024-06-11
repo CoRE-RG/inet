@@ -7,8 +7,10 @@
 
 #include "inet/linklayer/ethernet/basic/EthernetMac.h"
 
+#include "inet/common/PacketEventTag.h"
 #include "inet/common/ProtocolTag_m.h"
 #include "inet/common/Simsignals.h"
+#include "inet/common/TimeTag.h"
 #include "inet/linklayer/common/EtherType_m.h"
 #include "inet/linklayer/common/InterfaceTag_m.h"
 #include "inet/linklayer/common/MacAddressTag_m.h"
@@ -100,6 +102,18 @@ void EthernetMac::startFrameTransmission()
     // add preamble and SFD (Starting Frame Delimiter), then send out
     encapsulate(frame);
 
+    auto packetEvent = new PacketTransmittedEvent();
+    auto packet = frame;
+    simtime_t packetTransmissionTime = packet->getBitLength() / curEtherDescr.bitrate;
+    simtime_t bitTransmissionTime = packet->getBitLength() != 0 ? 1 / curEtherDescr.bitrate : 0;
+    packetEvent->setDatarate(bps(curEtherDescr.bitrate));
+    insertPacketEvent(this, packet, PEK_TRANSMITTED, bitTransmissionTime, 0, packetEvent);
+    increaseTimeTag<TransmissionTimeTag>(packet, bitTransmissionTime, packetTransmissionTime);
+    if (auto channel = dynamic_cast<cDatarateChannel *>(physOutGate->findTransmissionChannel())) {
+        insertPacketEvent(this, packet, PEK_PROPAGATED, 0, channel->getDelay());
+        increaseTimeTag<PropagationTimeTag>(packet, channel->getDelay(), channel->getDelay());
+    }
+
     // send
     auto& oldPacketProtocolTag = frame->removeTag<PacketProtocolTag>();
     frame->clearTags();
@@ -108,7 +122,7 @@ void EthernetMac::startFrameTransmission()
     EV_INFO << "Transmission of " << frame << " started.\n";
     auto signal = new EthernetSignal(frame->getName());
     signal->setSrcMacFullDuplex(duplexMode);
-    signal->setBitrate(curEtherDescr->bitrate);
+    signal->setBitrate(curEtherDescr.bitrate);
     if (sendRawBytes) {
         auto bytes = frame->peekDataAsBytes();
         frame->eraseAll();
@@ -373,7 +387,7 @@ void EthernetMac::scheduleEndIFGPeriod()
 {
     ASSERT(nullptr == currentTxFrame);
     changeTransmissionState(WAIT_IFG_STATE);
-    simtime_t endIFGTime = simTime() + (b(INTERFRAME_GAP_BITS).get() / curEtherDescr->bitrate);
+    simtime_t endIFGTime = simTime() + (b(INTERFRAME_GAP_BITS).get() / curEtherDescr.bitrate);
     scheduleAt(endIFGTime, endIfgTimer);
 }
 
@@ -381,7 +395,7 @@ void EthernetMac::scheduleEndPausePeriod(int pauseUnits)
 {
     ASSERT(nullptr == currentTxFrame);
     // length is interpreted as 512-bit-time units
-    simtime_t pausePeriod = ((pauseUnits * PAUSE_UNIT_BITS) / curEtherDescr->bitrate);
+    simtime_t pausePeriod = ((pauseUnits * PAUSE_UNIT_BITS) / curEtherDescr.bitrate);
     scheduleAfter(pausePeriod, endPauseTimer);
     changeTransmissionState(PAUSE_STATE);
 }

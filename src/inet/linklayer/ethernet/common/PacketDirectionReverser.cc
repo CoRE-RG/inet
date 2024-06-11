@@ -20,7 +20,7 @@
 #include "inet/protocolelement/cutthrough/CutthroughTag_m.h"
 #include "inet/protocolelement/redundancy/StreamTag_m.h"
 #include "inet/protocolelement/shaper/EligibilityTimeTag_m.h"
-#include "inet/queueing/common/LabelsTag_m.h"
+#include "inet/common/LabelsTag_m.h"
 
 namespace inet {
 

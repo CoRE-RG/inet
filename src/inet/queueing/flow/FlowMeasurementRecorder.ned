@@ -25,12 +25,13 @@ import inet.queueing.contract.IPacketFlow;
 simple FlowMeasurementRecorder extends PacketFlowBase like IPacketFlow
 {
     parameters:
-        object packetFilter = default("*"); // which packets are considered, matches all packets by default
-        int offset @unit(b) = default(0b); // designates the packet part to be measured
-        int length @unit(b) = default(-1b); // designates the packet part to be measured
-        string flowName = default(""); // use packet flow to separate measurement from other measurements
-        string measure = default("*"); // match expression for a combination of: packetEvent, elapsedTime, delayingTime, queueingTime, processingTime, transmissionTime, propagationTime
+        object packetFilter = default("*"); // Which packets are considered, matches all packets by default
+        int offset @unit(b) = default(0b); // Designates the packet part to be measured
+        int length @unit(b) = default(-1b); // Designates the packet part to be measured
+        string flowName = default(""); // Use packet flow to separate measurement from other measurements
+        string measure = default("not packetEvent"); // Match expression for a combination of: packetEvent, elapsedTime, delayingTime, queueingTime, processingTime, transmissionTime, propagationTime
         bool endMeasurement = default(true);
+        string packetEventFileName = default("results/" + expand("${configname}-") + fullPath() + "-packetEvent.json");
         @class(FlowMeasurementRecorder);
         @display("i=block/timer");
         @signal[packetFlowMeasured](type=inet::Packet);
