@@ -177,6 +177,8 @@ Packet *PacketFilterBase::canPullPacket(const cGate *gate) const
 {
     Enter_Method("canPullPacket");
     while (true) {
+        if (provider == nullptr)
+            return nullptr;
         auto packet = provider.canPullPacket();
         if (packet == nullptr)
             return nullptr;
