@@ -15,7 +15,9 @@ package inet.protocolelement.shaper;
 //
 // @see ~ATS8021qFilter, ~GroupEligibilityTimeMeter, ~EligibilityTimeGate, ~EligibilityTimeFilter, ~EligibilityTimeQueue, ~EligibilityTimeTag
 
-simple GroupEligibilityTimeTable
+import inet.protocolelement.contract.ITable;
+
+simple GroupEligibilityTimeTable like ITable
 {
     parameters:
         @display("i=block/table");
